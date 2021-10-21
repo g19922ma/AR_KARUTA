@@ -11,7 +11,7 @@ import SceneKit
 import ARKit
 
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
@@ -23,6 +23,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self //デリゲートになる
+        sceneView.session.delegate = self // ARSessionDelegateデリゲート
         sceneView.scene = SCNScene() //シーンを作る
         sceneView.debugOptions = .showWireframe //ワイヤーフレーム表示
         sceneView.scene.physicsWorld.gravity = SCNVector3(0, -1.0, 0)//重力の設定
@@ -46,8 +47,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // セッションを止める
         sceneView.session.pause()
     }
+    
+    var y2 = 0.0
     // シーンビューsceneViewをタップしたら
-
     @IBAction func tap(_ sender: UITapGestureRecognizer) {
     // タップした2D座標
         let tapLoc = sender.location(in: sceneView)
@@ -69,7 +71,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         cardNode.physicsBody?.applyForce(forceVec, asImpulse: true)
         // 位置決めする
         cardNode.position = SCNVector3(pos.x, y, pos.z)
-        
+        y2 = Double(y)
         // シーンに箱ノードを追加する
         sceneView.scene.rootNode.addChildNode(cardNode)
     }
@@ -96,5 +98,44 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+    }
+    
+    // フレーム毎に繰り返し実行する（ARSessionDelegateデリゲートメソッド、ある条件のときに処理をする）
+    func session(_ session: ARSession, didUpdate frame: ARFrame){
+        
+        let handler = VNImageRequestHandler(cvPixelBuffer: frame.capturedImage,
+                                            options: [:])
+        
+        do {
+            // Perform VNDetectHumanHandPoseRequest
+            try handler.perform([handPoseRequest])
+            // Continue only when a hand was detected in the frame.
+            // Since we set the maximumHandCount property of the request to 1, there will be at most one observation.
+            guard let observation = handPoseRequest.results?.first else {
+                return
+            }
+            //中指のPointの取得
+            let midPoint = try observation.recognizedPoints(.middleFinger)
+            //tip pointの取得
+            guard let MidPoint = midPoint[.middleTip] else {
+                return
+            }
+            //一定の精度を下回るポイントは無視
+            guard MidPoint.confidence > 0.3 else {
+                return
+            }
+            
+            let handNode = HandNode()
+            // 位置決めする
+            handNode.position = SCNVector3(1-MidPoint.x,y2,MidPoint.y)//
+            // シーンに箱ノードを追加する
+            sceneView.scene.rootNode.addChildNode(handNode)
+            
+        } catch {
+            /*cameraFeedSession?.stopRunning()
+            let error = AppError.visionError(error: error)
+            DispatchQueue.main.async {
+                error.displayInViewController(self)*/
+            }
     }
 }
