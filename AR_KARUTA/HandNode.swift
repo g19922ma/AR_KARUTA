@@ -22,5 +22,12 @@ class HandNode: SCNNode {
         hand.firstMaterial?.diffuse.contents = UIColor.white
         // ノードのgeometryプロパティに設定する
         geometry = hand
+        //物理ボディの設定
+        let bodyShape = SCNPhysicsShape(geometry: geometry!,options:[:])
+        physicsBody = SCNPhysicsBody(type: .kinematic, shape: bodyShape)
+        //力や衝突の影響を受けないが、移動すると他のボディに影響を与える
+        physicsBody?.isAffectedByGravity = false //重力の影響
+        physicsBody?.friction = 2.0 //摩擦
+        physicsBody?.restitution = 0.2 //反発力
     }
 }

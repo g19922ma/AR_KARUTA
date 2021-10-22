@@ -22,5 +22,11 @@ class CardNode: SCNNode {
         card.firstMaterial?.diffuse.contents = UIColor.green
         // ノードのgeometryプロパティに設定する
         geometry = card
+        //物理ボディの設定
+        let bodyShape = SCNPhysicsShape(geometry: geometry!,options:[:])
+        physicsBody = SCNPhysicsBody(type: .dynamic, shape: bodyShape)
+        physicsBody?.isAffectedByGravity = false //重力の影響
+        physicsBody?.friction = 2.0 //摩擦
+        physicsBody?.restitution = 0.2 //反発力
     }
 }

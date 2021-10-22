@@ -15,6 +15,7 @@
 		06A830B02721B313005D728B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06A830AE2721B313005D728B /* LaunchScreen.storyboard */; };
 		06A830BA2721B468005D728B /* CardNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830B92721B468005D728B /* CardNode.swift */; };
 		06A830BD2721B48D005D728B /* HandNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830BC2721B48D005D728B /* HandNode.swift */; };
+		06A830C027228CF8005D728B /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830BF27228CF8005D728B /* PlaneNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		06A830B12721B313005D728B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06A830B92721B468005D728B /* CardNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNode.swift; sourceTree = "<group>"; };
 		06A830BC2721B48D005D728B /* HandNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandNode.swift; sourceTree = "<group>"; };
+		06A830BF27228CF8005D728B /* PlaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneNode.swift; sourceTree = "<group>"; wrapsLines = 1; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				06A830A52721B30A005D728B /* art.scnassets */,
 				06A830A72721B30A005D728B /* ViewController.swift */,
 				06A830BC2721B48D005D728B /* HandNode.swift */,
+				06A830BF27228CF8005D728B /* PlaneNode.swift */,
 				06A830B92721B468005D728B /* CardNode.swift */,
 				06A830A92721B30A005D728B /* Main.storyboard */,
 				06A830AC2721B313005D728B /* Assets.xcassets */,
@@ -146,6 +149,7 @@
 			files = (
 				06A830BA2721B468005D728B /* CardNode.swift in Sources */,
 				06A830A82721B30A005D728B /* ViewController.swift in Sources */,
+				06A830C027228CF8005D728B /* PlaneNode.swift in Sources */,
 				06A830BD2721B48D005D728B /* HandNode.swift in Sources */,
 				06A830A42721B30A005D728B /* AppDelegate.swift in Sources */,
 			);
