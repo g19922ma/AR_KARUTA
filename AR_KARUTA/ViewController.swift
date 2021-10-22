@@ -34,6 +34,15 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         super.viewWillAppear(animated)
         let configuration = ARWorldTrackingConfiguration()//コンフィグを作る
         configuration.planeDetection = [.horizontal]//平面の検出を有効化
+        
+        configuration.environmentTexturing = .automatic
+        
+        //手とARの位置関係を正しくする
+        // People Occlusion が使える端末か判定
+        if ARWorldTrackingConfiguration.supportsFrameSemantics(.personSegmentationWithDepth) {
+            // People Occlusion を使用する
+            configuration.frameSemantics = .personSegmentationWithDepth
+        }
         sceneView.session.run(configuration)//セッションを開始
     }
 
@@ -137,5 +146,20 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             DispatchQueue.main.async {
                 error.displayInViewController(self)*/
             }
+    }
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {
+            return
+        }
+        node.addChildNode(PlaneNode(anchor: planeAnchor))
+    }
+    func rendrer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {
+            return
+        }
+        guard let planeNode = node.childNodes.first as? PlaneNode else {
+            return
+        }
+        planeNode.update(anchor:planeAnchor)
     }
 }
