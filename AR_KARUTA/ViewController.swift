@@ -9,6 +9,7 @@ import UIKit
 import Vision
 import SceneKit
 import ARKit
+import AVFoundation
 
 
 class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
@@ -58,6 +59,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     }
     
     var y2 = 0.0
+    var cardWorldPos = SCNVector3(0,0,0)
     // シーンビューsceneViewをタップしたら
     @IBAction func tap(_ sender: UITapGestureRecognizer) {
     // タップした2D座標
@@ -78,8 +80,10 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         let unitVec = SCNVector3(1,1,0)
         let forceVec = SCNVector3(2*unitVec.x,2*unitVec.y,2*unitVec.z)
         cardNode.physicsBody?.applyForce(forceVec, asImpulse: true)
+        
+        cardWorldPos = SCNVector3(pos.x, y, pos.z)
         // 位置決めする
-        cardNode.position = SCNVector3(pos.x, y, pos.z)
+        cardNode.position = cardWorldPos
         y2 = Double(y)
         // シーンに箱ノードを追加する
         sceneView.scene.rootNode.addChildNode(cardNode)
@@ -126,19 +130,32 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             //中指のPointの取得
             let midPoint = try observation.recognizedPoints(.middleFinger)
             //tip pointの取得
-            guard let MidPoint = midPoint[.middleTip] else {
+            guard let midTipPoint = midPoint[.middleTip] else {
                 return
             }
             //一定の精度を下回るポイントは無視
-            guard MidPoint.confidence > 0.3 else {
+            guard midTipPoint.confidence > 0.3 else {
                 return
             }
+            print(midTipPoint)
+            let y_ = 1-midTipPoint.y
+            //let pixel_x = CVPixelBufferGetHeight(frame.capturedImage)
+            //let pixel_y = CVPixelBufferGetWidth(frame.capturedImage)
+            let pixel_x = UIScreen.main.bounds.size.width
+            let pixel_y = UIScreen.main.bounds.size.height
+            hit(x: midTipPoint.x*Double(pixel_x),y: y_*Double(pixel_y))
             
-            let handNode = HandNode()
+            //let positionOnScreen = sceneView.projectPoint(midTipPoint as! SCNVector3)
+            
+            //let previewLayer = frame.capturedImage
+            //let convertedPoints = previewLayer.layerPointConverted(fromCaptureDevicePoint: midTipPoint)
+              
+            
+            /*let handNode = HandNode()
             // 位置決めする
             handNode.position = SCNVector3(1-MidPoint.x,y2,MidPoint.y)//
             // シーンに箱ノードを追加する
-            sceneView.scene.rootNode.addChildNode(handNode)
+            sceneView.scene.rootNode.addChildNode(handNode)*/
             
         } catch {
             /*cameraFeedSession?.stopRunning()
@@ -147,6 +164,25 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 error.displayInViewController(self)*/
             }
     }
+    
+    func hit(x :Double, y: Double){
+        print("x,y: ")
+        print(x,y)
+        //カードのスクリーン座標
+        let cardPos = sceneView.projectPoint(cardWorldPos)
+        print("cardPos: ")
+        print(cardPos)
+        let X = cardPos.x - Float(x)
+        let Y = cardPos.y - Float(y)
+        //カードと指の距離
+        let distance = sqrt(X*X+Y*Y)
+        print("distance: ")
+        print(distance)
+        if(distance < 100) {
+            print("hit!")
+        }
+    }
+    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {
             return
