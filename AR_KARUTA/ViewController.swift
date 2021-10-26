@@ -58,8 +58,8 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         sceneView.session.pause()
     }
     
-    var y2 = 0.0
     var cardWorldPos = SCNVector3(0,0,0)
+    var cardWorldPositions : [SCNVector3] = []
     // シーンビューsceneViewをタップしたら
     @IBAction func tap(_ sender: UITapGestureRecognizer) {
     // タップした2D座標
@@ -82,9 +82,9 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         cardNode.physicsBody?.applyForce(forceVec, asImpulse: true)
         
         cardWorldPos = SCNVector3(pos.x, y, pos.z)
+        cardWorldPositions.append(cardWorldPos)
         // 位置決めする
         cardNode.position = cardWorldPos
-        y2 = Double(y)
         // シーンに箱ノードを追加する
         sceneView.scene.rootNode.addChildNode(cardNode)
     }
@@ -94,6 +94,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     @IBAction func longTap(_ sender: UILongPressGestureRecognizer) {
     sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode() }
+        cardWorldPositions.removeAll()
     }
     
     
@@ -137,14 +138,16 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             guard midTipPoint.confidence > 0.3 else {
                 return
             }
-            print(midTipPoint)
+            //print(midTipPoint)
             let y_ = 1-midTipPoint.y
             //let pixel_x = CVPixelBufferGetHeight(frame.capturedImage)
             //let pixel_y = CVPixelBufferGetWidth(frame.capturedImage)
             let pixel_x = UIScreen.main.bounds.size.width
             let pixel_y = UIScreen.main.bounds.size.height
-            hit(x: midTipPoint.x*Double(pixel_x),y: y_*Double(pixel_y))
             
+            if (cardWorldPositions.count > 0) {
+            hit(x: midTipPoint.x*Double(pixel_x),y: y_*Double(pixel_y))
+            }
             //let positionOnScreen = sceneView.projectPoint(midTipPoint as! SCNVector3)
             
             //let previewLayer = frame.capturedImage
@@ -166,20 +169,24 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     }
     
     func hit(x :Double, y: Double){
-        print("x,y: ")
-        print(x,y)
-        //カードのスクリーン座標
-        let cardPos = sceneView.projectPoint(cardWorldPos)
-        print("cardPos: ")
-        print(cardPos)
-        let X = cardPos.x - Float(x)
-        let Y = cardPos.y - Float(y)
-        //カードと指の距離
-        let distance = sqrt(X*X+Y*Y)
-        print("distance: ")
-        print(distance)
-        if(distance < 100) {
-            print("hit!")
+        //print("x,y: ")
+        //print(x,y)
+        print(cardWorldPositions.count-1)
+        for i in 0...cardWorldPositions.count-1 {
+            //カードのスクリーン座標
+            let cardPos = sceneView.projectPoint(cardWorldPositions[i])
+            //print("cardPos: ")
+            //print(cardPos)
+            
+            let X = cardPos.x - Float(x)
+            let Y = cardPos.y - Float(y)
+            //カードと指の距離
+            let distance = sqrt(X*X+Y*Y)
+            //print("distance: ")
+            //print(distance)
+            if(distance < 100) {
+                print("hit!",i)
+            }
         }
     }
     
