@@ -16,6 +16,8 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    let utaPaths : [Any] = [Bundle.main.bundleURL.appendingPathComponent("02はるす.m4a"),Bundle.main.bundleURL.appendingPathComponent("67はるの.m4a")]
+    var utaPlayer = AVAudioPlayer()
     
     private var handPoseRequest = VNDetectHumanHandPoseRequest()
     var middleTip: CGPoint?
@@ -95,6 +97,15 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode() }
         cardWorldPositions.removeAll()
+        do {
+            let randomInt = Int.random(in:0..<utaPaths.count)
+            let utaPath = utaPaths[randomInt]
+            utaPlayer = try AVAudioPlayer(contentsOf: utaPath as! URL,fileTypeHint: nil)
+            utaPlayer.play()
+        } catch {
+            print(error.localizedDescription)
+            print("AVAudioPlayer init failed")
+        }
     }
     
     
@@ -140,25 +151,13 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             }
             //print(midTipPoint)
             let y_ = 1-midTipPoint.y
-            //let pixel_x = CVPixelBufferGetHeight(frame.capturedImage)
-            //let pixel_y = CVPixelBufferGetWidth(frame.capturedImage)
+            
             let pixel_x = UIScreen.main.bounds.size.width
             let pixel_y = UIScreen.main.bounds.size.height
             
             if (cardWorldPositions.count > 0) {
             hit(x: midTipPoint.x*Double(pixel_x),y: y_*Double(pixel_y))
             }
-            //let positionOnScreen = sceneView.projectPoint(midTipPoint as! SCNVector3)
-            
-            //let previewLayer = frame.capturedImage
-            //let convertedPoints = previewLayer.layerPointConverted(fromCaptureDevicePoint: midTipPoint)
-              
-            
-            /*let handNode = HandNode()
-            // 位置決めする
-            handNode.position = SCNVector3(1-MidPoint.x,y2,MidPoint.y)//
-            // シーンに箱ノードを追加する
-            sceneView.scene.rootNode.addChildNode(handNode)*/
             
         } catch {
             /*cameraFeedSession?.stopRunning()
