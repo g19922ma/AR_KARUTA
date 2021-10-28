@@ -77,7 +77,7 @@
                                         <fragment content="開始">
                                             <attributes>
                                                 <color key="NSColor" systemColor="tertiarySystemBackgroundColor"/>
-                                                <font key="NSFont" size="33" name="HiraginoSans-W4"/>
+                                                <font key="NSFont" size="33" name="HiraMinProN-W3"/>
                                             </attributes>
                                         </fragment>
                                     </attributedString>
