@@ -15,13 +15,15 @@ import AVFoundation
 class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    
-    let utaPaths : [Any] = [Bundle.main.bundleURL.appendingPathComponent("02はるす.m4a"),Bundle.main.bundleURL.appendingPathComponent("67はるの.m4a")]
-    var utaPlayer = AVAudioPlayer()
+
+    var synthesizer: AVSpeechSynthesizer!
+    var voice: AVSpeechSynthesisVoice!
     
     private var handPoseRequest = VNDetectHumanHandPoseRequest()
     var middleTip: CGPoint?
     
+    let utas : [String] = ["春すぎて夏きにけらし白妙の","春のよの夢ばかりなる手枕に","花さそう嵐の庭の雪ならで","花の色はうつりにけりないたづらに"]
+
     //private var gestureProcessor = HandGestureProcessor()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +31,10 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         sceneView.session.delegate = self // ARSessionDelegateデリゲート
         sceneView.scene = SCNScene() //シーンを作る
         sceneView.debugOptions = .showWireframe //ワイヤーフレーム表示
-        sceneView.scene.physicsWorld.gravity = SCNVector3(0, -1.0, 0)//重力の設定
         handPoseRequest.maximumHandCount = 1 //手の数
+        
+        self.synthesizer = AVSpeechSynthesizer()
+        self.voice = AVSpeechSynthesisVoice.init(language: "ja-JP")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,6 +93,11 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         cardNode.position = cardWorldPos
         // シーンに箱ノードを追加する
         sceneView.scene.rootNode.addChildNode(cardNode)
+        
+        let randomInt = Int.random(in: 0 ..< utas.count)
+        speak(utas[randomInt])
+        print(randomInt)
+        print(utas[randomInt])
     }
     
     //シーンビューsceneViewを長押したら、配置した札を消す
@@ -97,15 +106,6 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode() }
         cardWorldPositions.removeAll()
-        do {
-            let randomInt = Int.random(in:0..<utaPaths.count)
-            let utaPath = utaPaths[randomInt]
-            utaPlayer = try AVAudioPlayer(contentsOf: utaPath as! URL,fileTypeHint: nil)
-            utaPlayer.play()
-        } catch {
-            print(error.localizedDescription)
-            print("AVAudioPlayer init failed")
-        }
     }
     
     
@@ -203,5 +203,11 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             return
         }
         planeNode.update(anchor:planeAnchor)
+    }
+    
+    func speak(_ text: String) {
+        let utterance = AVSpeechUtterance.init(string: text)
+                utterance.voice = self.voice
+                self.synthesizer.speak(utterance)
     }
 }
