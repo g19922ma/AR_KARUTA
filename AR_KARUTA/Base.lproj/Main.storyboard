@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="t1d-pm-Ipk">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
-                                <rect key="frame" x="0.0" y="17" width="414" height="862"/>
+                                <rect key="frame" x="0.0" y="-50" width="414" height="946"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="vmv-Gp-22E" appends="YES" id="bFI-ls-Ede"/>
@@ -52,9 +53,78 @@
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="78.348214285714278"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="ilI-wA-Rte">
+            <objects>
+                <viewController id="t1d-pm-Ipk" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lok-xo-YjN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="mainPage" translatesAutoresizingMaskIntoConstraints="NO" id="8Th-aE-oPj">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Tuw-Sz-xyT" appends="YES" id="HFR-gI-hyC"/>
+                                </connections>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r8u-AI-aHR">
+                                <rect key="frame" x="140" y="495" width="138" height="69"/>
+                                <color key="backgroundColor" red="0.27843137254901962" green="0.53333333333333333" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="開始">
+                                            <attributes>
+                                                <color key="NSColor" systemColor="tertiarySystemBackgroundColor"/>
+                                                <font key="NSFont" size="33" name="HiraginoSans-W4"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="NO"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="BV1-FR-VrT" kind="presentation" modalPresentationStyle="fullScreen" id="qPQ-Fd-t1P"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nta-2M-Bv4"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8Th-aE-oPj" firstAttribute="leading" secondItem="nta-2M-Bv4" secondAttribute="leading" id="0Xj-Cb-bBA"/>
+                            <constraint firstItem="nta-2M-Bv4" firstAttribute="trailing" secondItem="r8u-AI-aHR" secondAttribute="trailing" constant="138" id="6TQ-3d-gaK"/>
+                            <constraint firstAttribute="bottom" secondItem="8Th-aE-oPj" secondAttribute="bottom" id="Awh-Ff-BSx"/>
+                            <constraint firstAttribute="trailing" secondItem="8Th-aE-oPj" secondAttribute="trailing" id="K5c-ot-zA0"/>
+                            <constraint firstItem="8Th-aE-oPj" firstAttribute="trailing" secondItem="nta-2M-Bv4" secondAttribute="trailing" id="TJo-tQ-Kc6"/>
+                            <constraint firstItem="8Th-aE-oPj" firstAttribute="leading" secondItem="lok-xo-YjN" secondAttribute="leading" id="XJA-3d-sgr"/>
+                            <constraint firstItem="8Th-aE-oPj" firstAttribute="top" secondItem="lok-xo-YjN" secondAttribute="top" id="bef-E6-2YT"/>
+                            <constraint firstItem="r8u-AI-aHR" firstAttribute="leading" secondItem="nta-2M-Bv4" secondAttribute="leading" constant="138" id="hVJ-Sz-Mms"/>
+                            <constraint firstAttribute="bottom" secondItem="8Th-aE-oPj" secondAttribute="bottom" id="je5-0Z-q6d"/>
+                            <constraint firstItem="8Th-aE-oPj" firstAttribute="top" secondItem="lok-xo-YjN" secondAttribute="top" id="kP9-SD-W2I"/>
+                            <constraint firstItem="nta-2M-Bv4" firstAttribute="bottom" secondItem="r8u-AI-aHR" secondAttribute="bottom" constant="200" id="o4e-Jj-dYj"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ksD-tX-PGc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Tuw-Sz-xyT"/>
+            </objects>
+            <point key="canvasLocation" x="1153.6231884057972" y="17.410714285714285"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="mainPage" width="332.5" height="591"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
