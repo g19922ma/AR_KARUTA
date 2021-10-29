@@ -22,6 +22,9 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     private var handPoseRequest = VNDetectHumanHandPoseRequest()
     var middleTip: CGPoint?
     
+    var startDate = Date()
+    var endDate = Date()
+    
     let utas : [String] = ["春すぎて夏きにけらし白妙の","春のよの夢ばかりなる手枕に","花さそう嵐の庭の雪ならで","花の色はうつりにけりないたづらに"]
 
     //private var gestureProcessor = HandGestureProcessor()
@@ -95,9 +98,10 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         sceneView.scene.rootNode.addChildNode(cardNode)
         
         let randomInt = Int.random(in: 0 ..< utas.count)
+        //時間の計測開始
+        startDate = Date()
+        //読み上げ
         speak(utas[randomInt])
-        print(randomInt)
-        print(utas[randomInt])
     }
     
     //シーンビューsceneViewを長押したら、配置した札を消す
@@ -185,6 +189,9 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             //print(distance)
             if(distance < 100) {
                 print("hit!",i)
+                endDate = Date()
+                //時間の表示
+                print(endDate.timeIntervalSince(startDate))
             }
         }
     }
