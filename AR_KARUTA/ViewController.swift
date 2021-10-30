@@ -25,7 +25,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     var startDate = Date()
     var endDate = Date()
     
-    let utas : [String] = ["春すぎて夏きにけらし白妙の","春のよの夢ばかりなる手枕に","花さそう嵐の庭の雪ならで","花の色はうつりにけりないたづらに"]
+    let utas : [String] = ["春すぎて〜、夏きにけらし、白妙の","春のよの〜、夢ばかりなる、手枕に","花さそう〜、嵐の庭の、雪ならで","花の色わ〜、うつりにけりな、いたづらに"]
 
     //private var gestureProcessor = HandGestureProcessor()
     override func viewDidLoad() {
@@ -215,6 +215,8 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     func speak(_ text: String) {
         let utterance = AVSpeechUtterance.init(string: text)
                 utterance.voice = self.voice
+        utterance.rate = 0.38 //話す速さ 0.0~1.0
+        utterance.pitchMultiplier = 1.0 //声の高さ 0.5~2.0
                 self.synthesizer.speak(utterance)
     }
 }
