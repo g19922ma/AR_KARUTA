@@ -18,8 +18,14 @@ class CardNode: SCNNode {
         super.init()
         // ジオメトリを作る
         let card = SCNBox(width: 0.052, height: 0.002, length: 0.073, chamferRadius: 0.005)
-        // 塗り
-        card.firstMaterial?.diffuse.contents = UIColor.green
+        let tex = SCNMaterial()
+        //表面
+        tex.diffuse.contents = UIImage(named: "art.scnassets/02はるす.png")
+        //その他の面
+        let other = SCNMaterial()
+        other.diffuse.contents = UIColor(red:122/255,green:175/255,blue:82/255, alpha: 1.0)
+        
+        card.materials = [other,other,other,other,tex,other,]
         // ノードのgeometryプロパティに設定する
         geometry = card
         //物理ボディの設定
