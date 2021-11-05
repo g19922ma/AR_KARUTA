@@ -26,6 +26,8 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     var endDate = Date()
     
     let utas : [String] = ["春すぎて〜、夏きにけらし、白妙の","春のよの〜、夢ばかりなる、手枕に","花さそう〜、嵐の庭の、雪ならで","花の色わ〜、うつりにけりな、いたづらに"]
+    
+    var okNum : [Int] = [0,1,2,3]
 
     //private var gestureProcessor = HandGestureProcessor()
     override func viewDidLoad() {
@@ -81,26 +83,36 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         }
         // ヒットテストの結果からAR空間のワールド座標を取り出す
         let pos = result.worldTransform.columns.3
-        // 箱ノードを作る
-        let cardNode = CardNode()
-        // ノードの高さを求める
-        let height = cardNode.boundingBox.max.y - cardNode.boundingBox.min.y
-        let y = pos.y + Float(height/2.0) //水平面と箱の底を合わせる
-        let unitVec = SCNVector3(1,1,0)
-        let forceVec = SCNVector3(2*unitVec.x,2*unitVec.y,2*unitVec.z)
-        cardNode.physicsBody?.applyForce(forceVec, asImpulse: true)
-        
-        cardWorldPos = SCNVector3(pos.x, y, pos.z)
-        cardWorldPositions.append(cardWorldPos)
-        // 位置決めする
-        cardNode.position = cardWorldPos
-        // シーンに箱ノードを追加する
-        sceneView.scene.rootNode.addChildNode(cardNode)
-        
-        let randomInt = Int.random(in: 0 ..< utas.count)
+        //札一覧
+        let cards : [String] = ["art.scnassets/02はるす.png","art.scnassets/67はるの.png","art.scnassets/96はなさ.png","art.scnassets/09はなの.png"]
+        if(okNum.count > 0) {
+            //どの札を配置するか
+            let cardNum = okNum[Int.random(in: 0 ..< okNum.count)]
+            //同じ札を配置しない
+            okNum.removeAll(where: {$0 == cardNum})
+            
+            // 箱ノードを作る
+            let cardNode = CardNode(card: cards[cardNum])
+            // ノードの高さを求める
+            let height = cardNode.boundingBox.max.y - cardNode.boundingBox.min.y
+            let y = pos.y + Float(height/2.0) //水平面と箱の底を合わせる
+            let unitVec = SCNVector3(1,1,0)
+            let forceVec = SCNVector3(2*unitVec.x,2*unitVec.y,2*unitVec.z)
+            cardNode.physicsBody?.applyForce(forceVec, asImpulse: true)
+            
+            cardWorldPos = SCNVector3(pos.x, y, pos.z)
+            cardWorldPositions.append(cardWorldPos)
+            // 位置決めする
+            cardNode.position = cardWorldPos
+            // シーンに箱ノードを追加する
+            sceneView.scene.rootNode.addChildNode(cardNode)
+        } else {
+            print("これ以上札を置くことができません")
+        }
         //時間の計測開始
         startDate = Date()
         //読み上げ
+        let randomInt = Int.random(in: 0 ..< utas.count)
         speak(utas[randomInt])
     }
     
@@ -110,6 +122,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode() }
         cardWorldPositions.removeAll()
+        okNum += [0,1,2,3]
     }
     
     
