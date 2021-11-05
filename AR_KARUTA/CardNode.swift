@@ -14,13 +14,20 @@ class CardNode: SCNNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override init() {
+    var thisCard = ""
+    init(card: String) {
         super.init()
+        thisCard = card
+        makeCard()
+    }
+    
+    func makeCard() {
         // ジオメトリを作る
         let card = SCNBox(width: 0.052, height: 0.002, length: 0.073, chamferRadius: 0.005)
         let tex = SCNMaterial()
         //表面
-        tex.diffuse.contents = UIImage(named: "art.scnassets/02はるす.png")
+        tex.diffuse.contents = UIImage(named: thisCard)
+
         //その他の面
         let other = SCNMaterial()
         other.diffuse.contents = UIColor(red:122/255,green:175/255,blue:82/255, alpha: 1.0)
