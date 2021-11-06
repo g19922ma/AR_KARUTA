@@ -15,7 +15,10 @@ import AVFoundation
 class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-
+    
+    @IBOutlet weak var label: UILabel!
+    var message: String = ""
+    
     var synthesizer: AVSpeechSynthesizer!
     var voice: AVSpeechSynthesisVoice!
     
@@ -40,6 +43,8 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         
         self.synthesizer = AVSpeechSynthesizer()
         self.voice = AVSpeechSynthesisVoice.init(language: "ja-JP")
+        
+        message = "タップして札を置いてください"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +61,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             configuration.frameSemantics = .personSegmentationWithDepth
         }
         sceneView.session.run(configuration)//セッションを開始
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -79,8 +85,10 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         let results = sceneView.hitTest(tapLoc, types: .existingPlaneUsingExtent)
         // 検知平面をタップしていたら最前面のヒットデータをresultに入れる
         guard let result = results.first else {
+            message = "平面をタップしてください"
             return
         }
+        message = "タップして札を置いてください"
         // ヒットテストの結果からAR空間のワールド座標を取り出す
         let pos = result.worldTransform.columns.3
         //札一覧
@@ -107,7 +115,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             // シーンに箱ノードを追加する
             sceneView.scene.rootNode.addChildNode(cardNode)
         } else {
-            print("これ以上札を置くことができません")
+            message = "これ以上札を置くことができません"
         }
         //時間の計測開始
         startDate = Date()
@@ -149,6 +157,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                                             options: [:])
         
         do {
+            label.text = message
             // Perform VNDetectHumanHandPoseRequest
             try handler.perform([handPoseRequest])
             // Continue only when a hand was detected in the frame.
