@@ -27,10 +27,14 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     
     var startDate = Date()
     var endDate = Date()
+    let hyoji : [String] = ["はるす","はるの","はなさ","はなの"]
     
     let utas : [String] = ["春すぎて〜、夏きにけらし、白妙の","春のよの〜、夢ばかりなる、手枕に","花さそう〜、嵐の庭の、雪ならで","花の色わ〜、うつりにけりな、いたづらに"]
     
-    var okNum : [Int] = [0,1,2,3]
+    var okCardNum : [Int] = [0,1,2,3]
+    var okReadNum : [Int] = [0,1,2,3]
+    var haichiCard: [Int] = []
+    var take : [Int] = [0,0,0,0]//0空札1読まれていない2読まれた
 
     //private var gestureProcessor = HandGestureProcessor()
     override func viewDidLoad() {
@@ -89,15 +93,16 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             return
         }
         message = "タップして札を置いてください"
+        if(okCardNum.count<3){message = "ボタンを押してスタートしてください"}
         // ヒットテストの結果からAR空間のワールド座標を取り出す
         let pos = result.worldTransform.columns.3
         //札一覧
         let cards : [String] = ["art.scnassets/02はるす.png","art.scnassets/67はるの.png","art.scnassets/96はなさ.png","art.scnassets/09はなの.png"]
-        if(okNum.count > 0) {
+        if(okCardNum.count > 0) {
             //どの札を配置するか
-            let cardNum = okNum[Int.random(in: 0 ..< okNum.count)]
+            let cardNum = okCardNum[Int.random(in: 0 ..< okCardNum.count)]
             //同じ札を配置しない
-            okNum.removeAll(where: {$0 == cardNum})
+            okCardNum.removeAll(where: {$0 == cardNum})
             
             // 箱ノードを作る
             let cardNode = CardNode(card: cards[cardNum])
@@ -114,14 +119,11 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             cardNode.position = cardWorldPos
             // シーンに箱ノードを追加する
             sceneView.scene.rootNode.addChildNode(cardNode)
+            haichiCard.append(cardNum)
+            take[cardNum] = 1
         } else {
             message = "これ以上札を置くことができません"
         }
-        //時間の計測開始
-        startDate = Date()
-        //読み上げ
-        let randomInt = Int.random(in: 0 ..< utas.count)
-        speak(utas[randomInt])
     }
     
     //シーンビューsceneViewを長押したら、配置した札を消す
@@ -130,7 +132,13 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode() }
         cardWorldPositions.removeAll()
-        okNum += [0,1,2,3]
+        okCardNum += [0,1,2,3]
+        okReadNum += [0,1,2,3]
+        touchCount=0
+        pictureCount = 0
+        for i in 0...take.count-1 {
+            take[i] = 0
+        }
     }
     
     
@@ -192,8 +200,12 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 error.displayInViewController(self)*/
             }
     }
-    
+
+    var touchCount = 0
+    var pictureCount = 0
     func hit(x :Double, y: Double){
+        pictureCount += 1
+        if(pictureCount < 15){return}
         //print("x,y: ")
         //print(x,y)
         print(cardWorldPositions.count-1)
@@ -209,11 +221,29 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             let distance = sqrt(X*X+Y*Y)
             //print("distance: ")
             //print(distance)
-            if(distance < 100) {
+            if (distance < 100) {
+                touchCount += 1
+            }
+            var time = 0.00
+            if(readNum<100 && pictureCount>1 && distance < 100 && take[readNum] != 2) {
                 print("hit!",i)
                 endDate = Date()
                 //時間の表示
-                print(endDate.timeIntervalSince(startDate))
+                time = ceil(Double(endDate.timeIntervalSince(startDate))*1000)/1000
+                //取った札があっているかどうか
+                print(haichiCard[i],readNum)
+                let s1 = String(hyoji[haichiCard[i]])
+                let s3 = String(hyoji[readNum])
+                if(time>0){
+                    if(haichiCard[i] == readNum){
+                        let s2 = String(time)
+                      message = s1+"を"+s2+"秒で取った！"
+                        take[readNum] = 2
+                    } else {
+                        message = "それは「"+s3+"」じゃないよ！"
+                    }
+                }
+
             }
         }
     }
@@ -224,6 +254,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         }
         node.addChildNode(PlaneNode(anchor: planeAnchor))
     }
+    
     func rendrer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {
             return
@@ -240,5 +271,27 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         utterance.rate = 0.38 //話す速さ 0.0~1.0
         utterance.pitchMultiplier = 1.0 //声の高さ 0.5~2.0
                 self.synthesizer.speak(utterance)
+    }
+    
+    var speakedCount = 0
+    var readNum = 100
+    @IBOutlet weak var startButton: UIButton!
+    @IBAction func tapStartButton(_ sender: UIButton) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [self] in
+            if(okReadNum.count>0){
+                readNum = self.okReadNum[Int.random(in: 0 ..< okReadNum.count)]
+                //同じ歌を読まない
+                self.okReadNum.removeAll(where: {$0 == readNum})
+                pictureCount = 0
+                //時間の計測開始
+                self.startDate = Date()
+                //読み上げ
+                self.speak(self.utas[readNum])
+                self.speakedCount += 1
+                print(readNum)
+            } else {
+                message = "全ての歌を読み終わりました"
+            }
+        }
     }
 }
