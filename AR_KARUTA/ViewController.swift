@@ -277,6 +277,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     var readNum = 100
     @IBOutlet weak var startButton: UIButton!
     @IBAction func tapStartButton(_ sender: UIButton) {
+        message = "ゲーム開始"
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [self] in
             if(okReadNum.count>0){
                 readNum = self.okReadNum[Int.random(in: 0 ..< okReadNum.count)]
@@ -286,7 +287,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 //時間の計測開始
                 self.startDate = Date()
                 //読み上げ
-                //self.speak(self.utas[readNum])
+                self.speak(self.utas[readNum])
                 self.speakedCount += 1
                 print(readNum)
             } else {
