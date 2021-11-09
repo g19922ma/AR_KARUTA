@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0671484E272919ED00D1543A /* 02はるす.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0671484D272919ED00D1543A /* 02はるす.m4a */; };
-		0671485327291AD500D1543A /* 67はるの.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0671485227291AD500D1543A /* 67はるの.m4a */; };
 		06A830A42721B30A005D728B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830A32721B30A005D728B /* AppDelegate.swift */; };
 		06A830A62721B30A005D728B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 06A830A52721B30A005D728B /* art.scnassets */; };
 		06A830A82721B30A005D728B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830A72721B30A005D728B /* ViewController.swift */; };
@@ -18,11 +16,10 @@
 		06A830BA2721B468005D728B /* CardNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830B92721B468005D728B /* CardNode.swift */; };
 		06A830BD2721B48D005D728B /* HandNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830BC2721B48D005D728B /* HandNode.swift */; };
 		06A830C027228CF8005D728B /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830BF27228CF8005D728B /* PlaneNode.swift */; };
+		06D939DD273A943E00A9BE72 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D939DC273A943E00A9BE72 /* ResultViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0671484D272919ED00D1543A /* 02はるす.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "02はるす.m4a"; path = "../../../../../Downloads/02はるす.m4a"; sourceTree = "<group>"; };
-		0671485227291AD500D1543A /* 67はるの.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "67はるの.m4a"; path = "../../../../../Downloads/67はるの.m4a"; sourceTree = "<group>"; };
 		06A830A02721B30A005D728B /* AR_KARUTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AR_KARUTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06A830A32721B30A005D728B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06A830A52721B30A005D728B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -34,6 +31,7 @@
 		06A830B92721B468005D728B /* CardNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNode.swift; sourceTree = "<group>"; };
 		06A830BC2721B48D005D728B /* HandNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandNode.swift; sourceTree = "<group>"; };
 		06A830BF27228CF8005D728B /* PlaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneNode.swift; sourceTree = "<group>"; wrapsLines = 1; };
+		06D939DC273A943E00A9BE72 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,12 +67,11 @@
 				06A830A32721B30A005D728B /* AppDelegate.swift */,
 				06A830A52721B30A005D728B /* art.scnassets */,
 				06A830A72721B30A005D728B /* ViewController.swift */,
-				0671484D272919ED00D1543A /* 02はるす.m4a */,
-				0671485227291AD500D1543A /* 67はるの.m4a */,
 				06A830BC2721B48D005D728B /* HandNode.swift */,
 				06A830BF27228CF8005D728B /* PlaneNode.swift */,
 				06A830B92721B468005D728B /* CardNode.swift */,
 				06A830A92721B30A005D728B /* Main.storyboard */,
+				06D939DC273A943E00A9BE72 /* ResultViewController.swift */,
 				06A830AC2721B313005D728B /* Assets.xcassets */,
 				06A830AE2721B313005D728B /* LaunchScreen.storyboard */,
 				06A830B12721B313005D728B /* Info.plist */,
@@ -142,8 +139,6 @@
 				06A830A62721B30A005D728B /* art.scnassets in Resources */,
 				06A830B02721B313005D728B /* LaunchScreen.storyboard in Resources */,
 				06A830AD2721B313005D728B /* Assets.xcassets in Resources */,
-				0671485327291AD500D1543A /* 67はるの.m4a in Resources */,
-				0671484E272919ED00D1543A /* 02はるす.m4a in Resources */,
 				06A830AB2721B30A005D728B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +155,7 @@
 				06A830C027228CF8005D728B /* PlaneNode.swift in Sources */,
 				06A830BD2721B48D005D728B /* HandNode.swift in Sources */,
 				06A830A42721B30A005D728B /* AppDelegate.swift in Sources */,
+				06D939DD273A943E00A9BE72 /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
