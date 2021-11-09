@@ -286,11 +286,12 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 //時間の計測開始
                 self.startDate = Date()
                 //読み上げ
-                self.speak(self.utas[readNum])
+                //self.speak(self.utas[readNum])
                 self.speakedCount += 1
                 print(readNum)
             } else {
                 message = "全ての歌を読み終わりました"
+                self.performSegue(withIdentifier: "result", sender: nil)
             }
         }
     }
