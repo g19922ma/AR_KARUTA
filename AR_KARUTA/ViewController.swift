@@ -9,7 +9,7 @@ import UIKit
 import Vision
 import SceneKit
 import ARKit
-//import AVFoundation
+import AVFoundation
 
 
 class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
@@ -35,6 +35,9 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     var okReadNum : [Int] = [0,1,2,3]
     var haichiCard: [Int] = []
     var take : [Int] = [0,0,0,0]//0空札1読まれていない2読まれた
+    
+    var soundPlayer = AVAudioPlayer()
+    let soundPath = Bundle.main.bundleURL.appendingPathComponent("takeSound.mp3")
 
     //private var gestureProcessor = HandGestureProcessor()
     override func viewDidLoad() {
@@ -227,6 +230,15 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             }
             var time = 0.00
             if(readNum<100 && pictureCount>1 && distance < 100 && take[readNum] != 2) {
+                
+                do{
+                    soundPlayer = try AVAudioPlayer(contentsOf: soundPath,fileTypeHint: nil)
+                    soundPlayer.play()
+                } catch {
+                    print("エラー")
+                }
+                
+                
                 print("hit!",i)
                 endDate = Date()
                 //時間の表示
