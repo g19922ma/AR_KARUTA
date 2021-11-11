@@ -279,7 +279,7 @@
             <point key="canvasLocation" x="1153.6231884057972" y="17.410714285714285"/>
         </scene>
     </scenes>
-    <color key="tintColor" red="0.36438813809999998" green="0.46476924419999999" blue="0.30977949500000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+    <color key="tintColor" systemColor="systemBlueColor"/>
     <resources>
         <image name="arrowshape.turn.up.right.circle.fill" catalog="system" width="128" height="121"/>
         <image name="crown.fill" catalog="system" width="128" height="92"/>
@@ -291,6 +291,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
