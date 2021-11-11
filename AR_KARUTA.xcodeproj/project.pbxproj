@@ -17,6 +17,7 @@
 		06A830BD2721B48D005D728B /* HandNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830BC2721B48D005D728B /* HandNode.swift */; };
 		06A830C027228CF8005D728B /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A830BF27228CF8005D728B /* PlaneNode.swift */; };
 		06D939DD273A943E00A9BE72 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D939DC273A943E00A9BE72 /* ResultViewController.swift */; };
+		06EFCCDE273D009800EB1FFC /* takeSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 06EFCCDD273D009800EB1FFC /* takeSound.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		06A830BC2721B48D005D728B /* HandNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandNode.swift; sourceTree = "<group>"; };
 		06A830BF27228CF8005D728B /* PlaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneNode.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		06D939DC273A943E00A9BE72 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		06EFCCDD273D009800EB1FFC /* takeSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = takeSound.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				06A830A52721B30A005D728B /* art.scnassets */,
 				06A830A72721B30A005D728B /* ViewController.swift */,
 				06A830BC2721B48D005D728B /* HandNode.swift */,
+				06EFCCDD273D009800EB1FFC /* takeSound.mp3 */,
 				06A830BF27228CF8005D728B /* PlaneNode.swift */,
 				06A830B92721B468005D728B /* CardNode.swift */,
 				06A830A92721B30A005D728B /* Main.storyboard */,
@@ -136,6 +139,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06EFCCDE273D009800EB1FFC /* takeSound.mp3 in Resources */,
 				06A830A62721B30A005D728B /* art.scnassets in Resources */,
 				06A830B02721B313005D728B /* LaunchScreen.storyboard in Resources */,
 				06A830AD2721B313005D728B /* Assets.xcassets in Resources */,
