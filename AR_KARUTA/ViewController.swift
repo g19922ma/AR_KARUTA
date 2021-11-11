@@ -10,7 +10,7 @@ import Vision
 import SceneKit
 import ARKit
 import AVFoundation
-
+import AudioToolbox
 
 class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
 
@@ -237,9 +237,11 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 } catch {
                     print("エラー")
                 }
+                //let generator = UINotificationFeedbackGenerator()
+                //generator.notificationOccurred(.success)
+                AudioServicesPlaySystemSound(1520)
                 
-                
-                print("hit!",i)
+                //print("hit!",i)
                 endDate = Date()
                 //時間の表示
                 time = ceil(Double(endDate.timeIntervalSince(startDate))*1000)/1000
