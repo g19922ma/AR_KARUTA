@@ -40,11 +40,23 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gwn-HA-QhF">
                                 <rect key="frame" x="324" y="615" width="46" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="　　　"/>
+                                <color key="tintColor" red="0.27565709490000001" green="0.50982167629999997" blue="0.26656977380000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="　　　">
+                                    <color key="titleColor" red="0.27565709490000001" green="0.50982167629999997" blue="0.26656977380000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
                                 <connections>
                                     <action selector="tapStartButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="SFS-uE-Kr5"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGZ-o0-ZMf">
+                                <rect key="frame" x="54" y="303" width="266" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="1" green="0.45070464900000001" blue="0.50787592930000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
+                                <color key="textColor" red="0.49276685710000001" green="0.1213290915" blue="0.16077589989999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="highlightedColor" red="1" green="0.45070464900000001" blue="0.50787592930000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -59,6 +71,7 @@
                         <outlet property="label" destination="8ms-YL-F0M" id="8Gr-nt-BVR"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                         <outlet property="startButton" destination="gwn-HA-QhF" id="4wk-DF-Kv2"/>
+                        <outlet property="viewTime" destination="yGZ-o0-ZMf" id="6wQ-0D-S82"/>
                         <segue destination="eq5-Ye-bDL" kind="presentation" identifier="result" id="4wJ-WR-CAh"/>
                     </connections>
                 </viewController>
@@ -266,6 +279,7 @@
             <point key="canvasLocation" x="1153.6231884057972" y="17.410714285714285"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.36438813809999998" green="0.46476924419999999" blue="0.30977949500000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
         <image name="arrowshape.turn.up.right.circle.fill" catalog="system" width="128" height="121"/>
         <image name="crown.fill" catalog="system" width="128" height="92"/>

@@ -9,7 +9,7 @@ import UIKit
 import Vision
 import SceneKit
 import ARKit
-import AVFoundation
+//import AVFoundation
 
 
 class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
@@ -201,6 +201,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
             }
     }
 
+    @IBOutlet weak var viewTime: UILabel!
     var touchCount = 0
     var pictureCount = 0
     func hit(x :Double, y: Double){
@@ -234,13 +235,21 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 print(haichiCard[i],readNum)
                 let s1 = String(hyoji[haichiCard[i]])
                 let s3 = String(hyoji[readNum])
-                if(time>0){
+                if(time>1){
                     if(haichiCard[i] == readNum){
                         let s2 = String(time)
                       message = s1+"を"+s2+"秒で取った！"
                         take[readNum] = 2
+                        viewTime.text = "取り！"+s2+"秒"
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            self.viewTime.text = ""
+                        }
                     } else {
                         message = "それは「"+s3+"」じゃないよ！"
+                        viewTime.text = "お手つき！"
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            self.viewTime.text = ""
+                        }
                     }
                 }
 
