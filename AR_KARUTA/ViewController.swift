@@ -250,7 +250,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 print(haichiCard[i],readNum)
                 let s1 = String(hyoji[haichiCard[i]])
                 let s3 = String(hyoji[readNum])
-                if(time>1){
+                if(time>0.5){
                     
                     if(haichiCard[i] == readNum){
                         let s2 = String(time)
