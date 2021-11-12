@@ -37,6 +37,8 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     
     var soundPlayer = AVAudioPlayer()
     let soundPath = Bundle.main.bundleURL.appendingPathComponent("takeSound.mp3")
+    
+    var miss = 0
 
     //private var gestureProcessor = HandGestureProcessor()
     override func viewDidLoad() {
@@ -249,6 +251,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 let s1 = String(hyoji[haichiCard[i]])
                 let s3 = String(hyoji[readNum])
                 if(time>1){
+                    
                     if(haichiCard[i] == readNum){
                         let s2 = String(time)
                       message = s1+"を"+s2+"秒で取った！"
@@ -260,8 +263,10 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                     } else {
                         message = "それは「"+s3+"」じゃないよ！"
                         viewTime.text = "お手つき！"
+                        miss += 1
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             self.viewTime.text = ""
+                            self.message = "ゲーム中"
                         }
                     }
                 }
@@ -299,7 +304,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     var readNum = 100
     @IBOutlet weak var startButton: UIButton!
     @IBAction func tapStartButton(_ sender: UIButton) {
-        message = "ゲーム開始"
+        message = "ゲーム中"
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [self] in
             if(okReadNum.count>0){
                 readNum = self.okReadNum[Int.random(in: 0 ..< okReadNum.count)]
@@ -314,7 +319,11 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 print(readNum)
             } else {
                 message = "全ての歌を読み終わりました"
+                if(miss==0){
+                self.performSegue(withIdentifier: "resultNoMiss", sender: nil)
+                } else {
                 self.performSegue(withIdentifier: "result", sender: nil)
+                }
             }
         }
     }
